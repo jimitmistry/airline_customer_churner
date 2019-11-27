@@ -115,7 +115,7 @@ ggplot(df_nps_complete, aes(x = "",y = "", fill = type_passenger))+
 # Apriori Transactions
 glimpse(df_nps_complete)
 dim(df_nps_complete)
-df_nps_complete1 = df_nps_complete[,c(3,5,10,14,33,34,35,36)]
+df_nps_complete1 = df_nps_complete[,c(1,2,3,7,8,9,10,14,15,16,17,19,20,24,33,34,35,36,37,38)]
 
 apply(apply(df_nps_complete1, 2, is.na), 2, which)
 df_nps_complete1$type_passenger[which(is.na(df_nps_complete1$type_passenger))] = "passive"
@@ -130,7 +130,7 @@ ruleset <- apriori(df_nps_completeX,
                    # Specify threshold of 0.005 for support, and 0.5 for confidence. That is, show only those values that are higher than the thresholds.
                    parameter = list(support=0.05, confidence = 0.05, minlen = 3),
                    # Specify the rhs as "Survived = Yes", and all the rest of the variables of the transaction as lhs of the equation
-                   appearance = list(default="lhs", rhs = ("type_passenger=promoter")))
+                   appearance = list(default="lhs", rhs = ("type_passenger=passive")))
 inspect(ruleset)
 inspectDT(ruleset)
 
@@ -275,6 +275,9 @@ ggplot(df_nps_complete, aes(Eating.and.Drinking.at.Airport))+
 
 ggplot(df_nps_complete, aes(Age))+
   geom_histogram(aes(fill = type_passenger), bins = 10, color = 'Black')
+
+ggplot(df_nps_complete, aes(Age))+
+  geom_histogram(aes(fill = Gender), bins = 10, color = 'Black')
 
 ggplot(df_nps_complete, aes(Price.Sensitivity))+
   geom_histogram(aes(fill = type_passenger), bins = 10, color = 'Black')
